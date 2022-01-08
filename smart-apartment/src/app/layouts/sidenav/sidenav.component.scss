@@ -1,0 +1,49 @@
+.sidenav {
+  position: relative;
+
+  .sidenav-container {
+    width: 100%;
+    min-height: 100vh;
+
+    ::ng-deep {
+      .mat-drawer-side {
+        background-color: white;
+        width: 240px;
+        border-right: 3px solid #f0f1f2;
+      }
+      .mat-drawer-inner-container {
+        overflow: auto;
+        overflow-x: hidden;
+      }
+    }
+
+    .sidenav-content {
+      background: #fffffe;
+      padding-bottom: 24px;
+
+      &__wrapper {
+        min-height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 24px 36px;
+        box-sizing: border-box;
+        padding-bottom: 200px;
+        background-repeat: no-repeat;
+        background-position: right bottom;
+
+        margin-bottom: 100px;
+        padding-bottom: 245px;
+      }
+    }
+
+    .sidenav-content::-webkit-scrollbar {
+      background: transparent !important;
+    }
+
+    .active {
+      background-color: #ff4081;
+      color: #ffffff;
+    }
+  }
+}

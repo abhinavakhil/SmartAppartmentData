@@ -1,0 +1,39 @@
+<div class="sidenav">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      id="sidenavContainer"
+      #sidenav
+      mode="side"
+      [opened]="mobileQuery.matches ? 'false' : 'true'"
+    >
+      <div *ngIf="apartmentList$ | async as apartmentList">
+        <mat-toolbar color="primary" class="company-info">
+          <h4>
+            {{
+              apartmentList.agentInfo.firstname +
+                " " +
+                apartmentList.agentInfo.lastname
+            }}
+            | {{ apartmentList.agentInfo.company }}
+          </h4>
+        </mat-toolbar>
+
+        <mat-nav-list>
+          <div *ngFor="let list of apartmentList.records">
+            {{ list }}
+          </div>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+      <div class="sidenav-content__wrapper">
+        <div id="map" class="map-container"></div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<!-- <div id="map" class="map-container"></div> -->
+<!-- https://wykks.github.io/ngx-mapbox-gl/demo/drag-a-marker -->
+<!-- https://github.com/zhengminhui/angular-mapbox-gl-geocoder IMP -->
+
+<!-- https://documentation.maptiler.com/hc/en-us/articles/4411342514193-Display-a-map-in-Angular-using-MapLibre-GL-JS -->
