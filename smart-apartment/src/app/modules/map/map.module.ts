@@ -3,17 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MapComponent } from './map.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: MapComponent,
-  },
-];
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [MapComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
+  imports: [CommonModule, SharedModule, FlexLayoutModule],
   exports: [MapComponent],
 })
 export class MapModule {}

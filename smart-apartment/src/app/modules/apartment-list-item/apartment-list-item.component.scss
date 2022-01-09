@@ -1,0 +1,57 @@
+.apartment-list-item-container {
+  h4 {
+    font-size: 14px;
+    margin-bottom: 0px;
+  }
+
+  p {
+    font-size: 13px;
+    margin-bottom: 0px;
+  }
+
+  .city {
+    font-size: 10px;
+    margin-top: -10px;
+  }
+
+  .company-info {
+    height: 40px;
+    cursor: pointer;
+
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .arrow-back {
+      font-size: 14px;
+      margin-right: 5px;
+    }
+  }
+
+  .photo-container {
+    padding: 5px 0px 5px 5px;
+    position: relative;
+    cursor: pointer;
+
+    .photo-item {
+      object-fit: cover;
+      height: 100%;
+      width: 143px;
+
+      &-text {
+        position: absolute;
+        bottom: 38px;
+        left: 39px;
+        background: #673ab7;
+        color: #ffffff;
+        padding: 10px;
+      }
+    }
+  }
+
+  .mr-5 {
+    margin-right: 5px;
+  }
+}

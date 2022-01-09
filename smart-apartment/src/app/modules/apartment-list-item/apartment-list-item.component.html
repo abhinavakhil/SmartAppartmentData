@@ -1,0 +1,69 @@
+<div class="apartment-list-item-container">
+  <div *ngIf="apartmentItemList$ | async as apartmentItem">
+    <mat-toolbar color="primary" class="company-info" *ngIf="showGallery">
+      <h4 class="flex-center" (click)="toggleGallery()">
+        <i class="material-icons arrow-back">arrow_back</i>
+        Back to Results
+      </h4>
+    </mat-toolbar>
+
+    <div *ngIf="!showGallery">
+      <mat-toolbar color="primary" class="company-info">
+        <h4 class="flex-center" routerLink="/smart-apartment">
+          <i class="material-icons arrow-back">arrow_back</i>
+          Back to Results
+        </h4>
+      </mat-toolbar>
+
+      <mat-toolbar color="primary" style="background: #8565d9">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          fxFlex="100"
+          class="filter-box"
+        >
+          <div>
+            <h4>{{ apartmentItem.name }}</h4>
+            <h6 class="city">{{ apartmentItem.city }}</h6>
+          </div>
+
+          <div>
+            <button mat-fab>
+              <mat-icon>favorite</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-toolbar>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="mr-5">
+        <div
+          *ngFor="let photo of apartmentItem.photos.slice(0, 3); last as last"
+          class="photo-container"
+          (click)="toggleGallery()"
+        >
+          <img [src]="photo" class="photo-item" />
+          <p *ngIf="last" class="photo-item-text">
+            {{ apartmentItem.photos.length }} Photos
+          </p>
+        </div>
+      </div>
+
+      <!-- body -->
+      <mat-tab-group mat-stretch-tabs class="">
+        <mat-tab label="Plans">
+          <div>
+            <app-plans [apartmentItem]="apartmentItem"></app-plans>
+          </div>
+        </mat-tab>
+        <mat-tab label="Overview">
+          <app-overview [apartmentItem]="apartmentItem"></app-overview>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+    <app-gallery
+      [galleryItem]="apartmentItem.photos"
+      *ngIf="showGallery"
+    ></app-gallery>
+  </div>
+</div>

@@ -5,12 +5,17 @@ import { LayoutComponent } from './layout.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'smart-apartment',
+    pathMatch: 'full',
+  },
+  {
+    path: 'smart-apartment',
     component: LayoutComponent,
     children: [
       {
         path: '',
         loadChildren: () =>
-          import('@app/modules/map/map.module').then((m) => m.MapModule),
+          import('@app/modules/home/home.module').then((m) => m.HomeModule),
         data: { title: 'Home' },
       },
     ],

@@ -1,0 +1,121 @@
+<div class="apartment-list-container">
+  <div *ngIf="apartmentList$ | async as apartmentList">
+    <mat-toolbar color="primary" class="company-info">
+      <h4>
+        {{
+          apartmentList.agentInfo?.firstname +
+            " " +
+            apartmentList.agentInfo?.lastname
+        }}
+        | {{ apartmentList.agentInfo?.company }}
+      </h4>
+    </mat-toolbar>
+
+    <mat-toolbar color="primary" style="background: #8565d9">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxFlex="100"
+        class="filter-box"
+      >
+        <div>
+          <div fxFlex="30" class="filter-box-rent">
+            <p class="filter-box-rent-text">
+              Rent
+              <img
+                src="https://my.smartapartmentdata.com/assets/images/arrow-down-white.svg"
+                width="7px"
+              />
+            </p>
+
+            <!-- <p class="filter-box-rent-text">{{ }}</p> -->
+          </div>
+        </div>
+
+        <div>
+          <button
+            mat-icon-button
+            class="example-icon favorite-icon"
+            aria-label="Example icon-button with heart icon"
+          >
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar>
+
+    <!-- body -->
+    <mat-nav-list class="apartment-list">
+      <mat-card
+        class="apartment-list-card"
+        *ngFor="let list of apartmentList.records"
+        routerLink="/smart-apartment"
+        [queryParams]="{
+          item: 'apartmentItem',
+          propertyId: list.propertyID
+        }"
+      >
+        <mat-card-content>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+              <h4>{{ list.name }}</h4>
+              <p>{{ list.streetAddress }}, {{ list.city }}</p>
+
+              <div
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+                class="apartment-list-details"
+              >
+                <div *ngFor="let floor of list.floorplans">
+                  <div fxLayout="row">
+                    <img
+                      src="https://my.smartapartmentdata.com/assets/images/0-bed.svg"
+                      *ngIf="floor.bedrooms == 0"
+                      class="bed-zero"
+                    />
+                    <img
+                      src="https://my.smartapartmentdata.com/assets/images/1-bed.svg"
+                      *ngIf="floor.bedrooms == 1"
+                      class="bed"
+                    />
+                    <img
+                      src="https://my.smartapartmentdata.com/assets/images/2-bed.svg"
+                      *ngIf="floor.bedrooms == 2"
+                      class="bed"
+                    />
+                    <img
+                      src="https://my.smartapartmentdata.com/assets/images/3-bed.svg"
+                      *ngIf="floor.bedrooms == 3"
+                      class="bed"
+                    />
+                    <span class="rent">{{ floor.price | currency }}+ </span>
+                  </div>
+                </div>
+              </div>
+
+              <p class="light-grey">
+                {{ list.highValueAmenities.length }} High Value Amenities
+              </p>
+            </div>
+            <div>
+              <img
+                mat-card-sm-image
+                [src]="list.photo"
+                class="image-preview"
+                *ngIf="list.photo; else preview"
+              />
+
+              <ng-template #preview>
+                <img
+                  mat-card-sm-image
+                  src="http://flxtable.com/wp-content/plugins/pl-platform/engine/ui/images/image-preview.jpg"
+                  class="image-preview"
+                />
+              </ng-template>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-nav-list>
+  </div>
+</div>

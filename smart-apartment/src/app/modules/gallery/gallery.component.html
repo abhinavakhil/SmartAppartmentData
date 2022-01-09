@@ -1,0 +1,14 @@
+<div class="gallery">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div *ngFor="let photo of galleryItem; let i = index">
+      <img [src]="photo" class="gallery-item" (click)="showLightbox(i)" />
+    </div>
+  </div>
+
+  <ng-image-fullscreen-view
+    [images]="imageObject"
+    [imageIndex]="currentIndex"
+    [show]="showFlag"
+    (close)="closeEventHandler()"
+  ></ng-image-fullscreen-view>
+</div>

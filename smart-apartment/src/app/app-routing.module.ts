@@ -10,7 +10,7 @@ const routes: Routes = [
   // {
   //   path: '',
   //   loadChildren: () =>
-  //     import('@app/modules/map/map.module').then((m) => m.MapModule),
+  //     import('@app/modules/home/home.module').then((m) => m.HomeModule),
   // },
   // { path: '**', redirectTo: '/404' },
 ];

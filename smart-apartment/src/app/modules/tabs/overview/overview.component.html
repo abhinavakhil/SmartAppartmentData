@@ -1,0 +1,172 @@
+<div class="overview">
+  <div fxLayout="row">
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <mat-icon class="mat-list-icon mat-icon mat-accent material-icons">
+          pets
+        </mat-icon>
+
+        <h3 *ngIf="apartmentItem.petInfo.allowed; else notPetsAllowed">
+          {{
+            apartmentItem.petInfo.breedRestriction
+              ? "No Aggressive breeds"
+              : "Yes Aggressive breeds"
+          }}
+          {{ apartmentItem.petInfo.limit }} Pets Max,
+          {{ apartmentItem.petInfo.weight }} lbs,
+          {{ apartmentItem.petInfo.extraRent }}/month extra,
+          {{ apartmentItem.petInfo.nonRefundableFee }} non-refundable deposit,
+        </h3>
+        <ng-template #notPetsAllowed>
+          <h3>No pets allowed</h3>
+        </ng-template>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-icon class="mat-list-icon mat-icon mat-accent material-icons">
+          local_parking
+        </mat-icon>
+
+        <h3>
+          {{ apartmentItem.parking.reserved ? "Reserved " : "" }}
+          {{ apartmentItem.parking.covered ? "Covered " : "" }}
+          {{ apartmentItem.parking.garage ? "Garage " : "" }}
+          {{ apartmentItem.parking.detached ? "Detached " : "" }}
+          Parking
+        </h3>
+      </mat-list-item>
+
+      <mat-accordion>
+        <mat-expansion-panel class="school-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon class="mat-list-icon mat-icon mat-accent material-icons"
+                >school</mat-icon
+              >
+              <h3 style="margin-left: 21px">
+                {{ apartmentItem.schoolsInfo.district }} School District
+              </h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngIf="apartmentItem.schoolsInfo.high">
+              <mat-icon class="mat-list-icon mat-icon mat-accent material-icons"
+                >school</mat-icon
+              >
+              <h3>{{ apartmentItem.schoolsInfo.high }} High School</h3>
+            </mat-list-item>
+            <mat-list-item *ngIf="apartmentItem?.schoolsInfo?.middle">
+              <mat-icon class="mat-list-icon mat-icon mat-accent material-icons"
+                >school</mat-icon
+              >
+              <h3>{{ apartmentItem.schoolsInfo.middle }} Middle School</h3>
+            </mat-list-item>
+            <mat-list-item *ngIf="apartmentItem.schoolsInfo.intermediate">
+              <mat-icon class="mat-list-icon mat-icon mat-accent material-icons"
+                >school</mat-icon
+              >
+              <h3>
+                {{ apartmentItem.schoolsInfo.intermediate }} Intermediate School
+              </h3>
+            </mat-list-item>
+            <mat-list-item *ngIf="apartmentItem.schoolsInfo.elementry">
+              <mat-icon class="mat-list-icon mat-icon mat-accent material-icons"
+                >school</mat-icon
+              >
+              <h3>
+                {{ apartmentItem.schoolsInfo.elementry }} Elementry School
+              </h3>
+            </mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-list-item role="listitem">
+        <mat-icon class="mat-list-icon mat-icon mat-accent material-icons">
+          receipt
+        </mat-icon>
+
+        <h3>
+          {{ apartmentItem.appFee }} App fee. <br />{{ apartmentItem.adminFee }}
+          Admin fee.
+        </h3>
+      </mat-list-item>
+
+      <mat-list-item role="listitem">
+        <mat-icon class="mat-list-icon mat-icon mat-accent material-icons">
+          build
+        </mat-icon>
+
+        <h3>
+          Built {{ apartmentItem.yearBuilt }}
+          <br />
+          Renovated
+          {{ apartmentItem.yearRenovated }}
+        </h3>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <mat-divider class="mt-10"></mat-divider>
+
+  <h2>HIGH-VALUE AMENITIES</h2>
+  <div>
+    <mat-list role="list" fxLayout="row wrap">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let item of apartmentItem.highValueAmenities"
+        fxFlex="50%"
+      >
+        <mat-icon class="mat-list-icon mat-icon mat-accent material-icons">
+          airplay
+        </mat-icon>
+
+        <h3>
+          {{ item }}
+        </h3>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <mat-divider class="mt-10"></mat-divider>
+
+  <h2>COMMUNITY FEATURES</h2>
+  <div>
+    <mat-list role="list" fxLayout="row wrap">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let item of apartmentItem.propertyAmenities"
+        fxFlex="50%"
+      >
+        <mat-icon class="mat-list-icon mat-icon mat-accent material-icons">
+          airplay
+        </mat-icon>
+
+        <h3>
+          {{ item }}
+        </h3>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <mat-divider class="mt-10"></mat-divider>
+
+  <h2>UNIT OPTIONS</h2>
+  <div>
+    <mat-list role="list" fxLayout="row wrap">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let item of apartmentItem.unitAmenities"
+        fxFlex="50%"
+      >
+        <mat-icon class="mat-list-icon mat-icon mat-accent material-icons">
+          airplay
+        </mat-icon>
+
+        <h3>
+          {{ item }}
+        </h3>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>

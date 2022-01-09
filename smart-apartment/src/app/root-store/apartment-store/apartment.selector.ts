@@ -13,3 +13,13 @@ export const getApartmentList = () =>
       return null;
     }
   });
+
+export const getApartmentItemList = () =>
+  createSelector(selectItems, (items) => {
+    {
+      if (items != null && items['apartmentItem']) {
+        return items['apartmentItem'];
+      }
+      return null;
+    }
+  });

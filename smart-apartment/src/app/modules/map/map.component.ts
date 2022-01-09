@@ -7,6 +7,7 @@ import { select, Store } from '@ngrx/store';
 import * as mapboxgl from 'mapbox-gl';
 import * as selectors from '@app/root-store/apartment-store/apartment.selector';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -14,37 +15,40 @@ import { Observable } from 'rxjs';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  apartmentList$: Observable<any> | undefined;
-  //sidenav
-  mobileQuery;
-  private _mobileQueryListener: () => void;
-
-  // ngOnInit(): void {
-  //   // this.mapService.buildMap();
-  // }
+  // apartmentList$: Observable<any> | undefined;
 
   storeData: any;
+  markers: any = [];
+  map: mapboxgl.Map | undefined;
+  style =
+    'https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=CH1cYDfxBV9ZBu1lHGqh';
+  zoom = 12;
+  lat = 45.899977;
+  lng = 6.172652;
+
   constructor(
     private mapService: MapService,
     private cd: ChangeDetectorRef,
-    private media: MediaMatcher,
+    private router: Router,
     private store$: Store<RootStoreState.State>
-  ) {
-    //sidenav
-    this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => this.cd.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-  }
+  ) {}
 
   ngOnInit() {
-    this.apartmentList$ = this.store$.pipe(
-      select(selectors.getApartmentList())
-    );
+    // this.apartmentList$ = this.store$.pipe(
+    //   select(selectors.getApartmentList())
+    // );
     // this.storeData = DATA.features;
     // this.selectedLink = null;
     // mapboxgl.accessToken = environment.mapbox.accessToken;
 
-    this.mapService.initializeMap();
+    this.map = new mapboxgl.Map({
+      accessToken: environment.mapbox.accessToken,
+      container: 'map',
+      style: this.style,
+      zoom: this.zoom,
+      center: [this.lng, this.lat],
+      scrollZoom: true,
+    });
 
     // this.map.on('load', (e) => {
     //   this.map.addSource('places', {
@@ -105,6 +109,18 @@ export class MapComponent implements OnInit {
     //   });
     // });
   }
+
+  // getCenterCoordinates() {
+  //   const boundary: any[] = [];
+  //   this.markers.forEach(function (marker: any) {
+  //     boundary.push(
+  //       new mapboxgl.LngLat(marker.coordinates[0], marker.coordinates[1])
+  //     );
+  //   });
+  //   let coordinates = new mapboxgl.LngLatBounds(...boundary);
+  //   const centerCoordinates = coordinates.getCenter();
+  //   return centerCoordinates;
+  // }
 
   // sortLonLat(storeIdentifier, searchResult) {
   //   const lats = [
@@ -203,8 +219,5 @@ export class MapComponent implements OnInit {
   //   this.selectedLink = index;
   // }
 
-  ngOnDestroy(): void {
-    //sidenav
-    this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
+  ngOnDestroy(): void {}
 }

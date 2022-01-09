@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApartmentService } from '@app/shared/services';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class ApartmentStoreEffects {
 
   @Effect() getApartmentItemEffect$: Observable<any> = this.action$.pipe(
     ofType<apartmentActions.GetApartmentItemRequestAction>(
-      apartmentActions.ActionTypes.GET_APARTMENT_REQUEST
+      apartmentActions.ActionTypes.GET_APARTMENT_ITEM_REQUEST
     ),
     switchMap((action: any) => {
       return this.apartmentService.propertyById(action.productId).pipe(

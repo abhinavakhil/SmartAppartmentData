@@ -1,0 +1,42 @@
+<div class="plan">
+  <div class="special-offer" *ngIf="apartmentItem.specials">
+    <h4>SPECIALS</h4>
+
+    <p>{{ apartmentItem.specials }}</p>
+  </div>
+  <mat-divider class="divider"></mat-divider>
+
+  <mat-list role="list" *ngFor="let plan of apartmentItem.floorplans">
+    <mat-list-item role="listitem">
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">
+        <div fxLayout="row">
+          <div fxLayout="column">
+            <h4>{{ plan.bed }} Bed, {{ plan.bath }} Bath</h4>
+            <p fxLayout="row">
+              {{ plan.sqft }} sqft
+              <i class="material-icons" (click)="openPlanDialog(plan)"
+                >arrow_drop_down</i
+              >
+            </p>
+          </div>
+
+          <div fxLayout="row" class="text">
+            <h4>
+              {{ plan.washerDryer.replace("_", " ") | titlecase }}
+            </h4>
+          </div>
+        </div>
+
+        <div fxLayout="row">
+          <h3>{{ plan.price | currency: "USD":"symbol":"1.0-0" }} &nbsp;</h3>
+
+          <h3 *ngIf="plan.priceMax > plan.price">
+            - &nbsp;{{ plan.priceMax | currency: "USD":"symbol":"1.0-0" }}
+          </h3>
+        </div>
+      </div>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+  </mat-list>
+</div>

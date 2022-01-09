@@ -15,6 +15,7 @@
     "@angular/common": "~12.2.0",
     "@angular/compiler": "~12.2.0",
     "@angular/core": "~12.2.0",
+    "@angular/flex-layout": "^13.0.0-beta.36",
     "@angular/forms": "~12.2.0",
     "@angular/material": "^12.2.13",
     "@angular/platform-browser": "~12.2.0",
@@ -25,6 +26,7 @@
     "@ngrx/store": "^13.0.2",
     "@ngrx/store-devtools": "^13.0.2",
     "mapbox-gl": "^2.6.1",
+    "ng-image-fullscreen-view": "^2.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
