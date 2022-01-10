@@ -16,6 +16,7 @@ export class ApartmentListItemComponent implements OnInit {
   subscription: Subscription = new Subscription();
   activeQuery: any;
   showGallery: boolean = false;
+  changeColor: boolean = false;
 
   constructor(
     private store$: Store<RootStoreState.State>,
@@ -50,5 +51,46 @@ export class ApartmentListItemComponent implements OnInit {
   goBack() {
     this.router.navigate(['/smart-apartment']);
     // this.store$.dispatch(new apartmentStoreActions.GetApartmentRequestAction());
+  }
+
+  toggleFavourite(apartmentItem: any) {
+    this.changeColor = !this.changeColor;
+    const item = { ...apartmentItem };
+    item.favorite = true;
+
+    const favourites = JSON.stringify(item);
+    localStorage.setItem('favourites', favourites);
+
+    // const favoritiesList = localStorage.getItem('favourites');
+    // const list = JSON.parse(favoritiesList);
+
+    // if (favoritiesList?.length >= 1) {
+    // }
+
+    // this.store$
+    //   .pipe(select(selectors.getFavouriteApartmentItemList()))
+    //   .subscribe((response: any) => {
+    //     console.log(response);
+    //     if (response.length >= 1) {
+    //       const currentFavourite = [];
+    //       currentFavourite.push(item);
+    //       const favourites = [...response, ...currentFavourite];
+    //       console.log(favourites);
+
+    //       this.store$.dispatch(
+    //         new apartmentStoreActions.GetFavouriteApartmentSuccessAction(
+    //           favourites
+    //         )
+    //       );
+    //     } else {
+    //       const favourite = [];
+    //       favourite.push(item);
+    //       this.store$.dispatch(
+    //         new apartmentStoreActions.GetFavouriteApartmentSuccessAction(
+    //           favourite
+    //         )
+    //       );
+    //     }
+    //   });
   }
 }

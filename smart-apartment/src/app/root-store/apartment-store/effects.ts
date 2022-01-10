@@ -48,4 +48,22 @@ export class ApartmentStoreEffects {
       );
     })
   );
+
+  // @Effect() getFavouriteApartmentItemEffect$: Observable<any> =
+  //   this.action$.pipe(
+  //     ofType<apartmentActions.GetFavouriteApartmentRequestAction>(
+  //       apartmentActions.ActionTypes.GET_FAVOURITE_APARTMENT_REQUEST
+  //     ),
+  //     switchMap((action: any) => {
+  //       // return this.apartmentService.propertyById(action.productId).pipe(
+  //       //   map((data) => {
+  //       // return new apartmentActions.GetFavouriteApartmentSuccessAction(action.);
+  //       // }),
+  //       console.log(action);
+  //       // catchError((error) => {
+  //       //   return error;
+  //       // })
+  //       // );
+  //     })
+  //   );
 }

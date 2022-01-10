@@ -33,3 +33,42 @@ export const getApartmentItemList = () =>
       return null;
     }
   });
+
+export const getApartmentRange = () =>
+  createSelector(selectItems, (items) => {
+    {
+      if (
+        items != null &&
+        items['apartment'] &&
+        items['apartment']['records']
+      ) {
+        const apartmentRecords = items['apartment']['records'];
+
+        let rangeList: any = [];
+        rangeList = apartmentRecords.map((record: any) => {
+          const propertyID = record.propertyID;
+          let updatedData: any[] = [];
+          record.floorplans.forEach((plan: any) => {
+            const plans = { ...plan, propertyID };
+            updatedData.push(plans);
+          });
+
+          return updatedData;
+        });
+
+        return rangeList.flat(1);
+      } else {
+        return null;
+      }
+    }
+  });
+
+export const getFavouriteApartmentItemList = () =>
+  createSelector(selectItems, (items) => {
+    {
+      if (items != null && items['favourite']) {
+        return items['favourite'];
+      }
+      return null;
+    }
+  });

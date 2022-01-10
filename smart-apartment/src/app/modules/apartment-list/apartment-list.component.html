@@ -1,5 +1,5 @@
 <div class="apartment-list-container">
-  <div *ngIf="apartmentList$ | async as apartmentList">
+  <div *ngIf="apartmentList$ | async as apartmentList; else loader">
     <mat-toolbar color="primary" class="company-info">
       <h4>
         {{
@@ -18,21 +18,38 @@
         fxFlex="100"
         class="filter-box"
       >
-        <div>
-          <div fxFlex="30" class="filter-box-rent">
-            <p class="filter-box-rent-text">
-              Rent
-              <img
-                src="https://my.smartapartmentdata.com/assets/images/arrow-down-white.svg"
-                width="7px"
-              />
-            </p>
+        <div class="filter-box-rent" (click)="filterRents()">
+          <p class="filter-box-rent-text">
+            Rent
+            <img
+              src="https://my.smartapartmentdata.com/assets/images/arrow-down-white.svg"
+              width="7px"
+            />
+          </p>
 
-            <!-- <p class="filter-box-rent-text">{{ }}</p> -->
-          </div>
+          <p class="filter-box-rent-text">
+            {{ minPrice | currency: "USD":"symbol":"1.0-0" }} -
+            {{
+              selectedPrice >= 1
+                ? (selectedPrice | currency: "USD":"symbol":"1.0-0")
+                : (maxPrice | currency: "USD":"symbol":"1.0-0")
+            }}
+          </p>
         </div>
 
-        <div>
+        <div class="filter-box-bed" (click)="filterBeds()">
+          <p class="filter-box-bed-text">
+            Bedrooms
+            <img
+              src="https://my.smartapartmentdata.com/assets/images/arrow-down-white.svg"
+              width="7px"
+            />
+          </p>
+
+          <p class="filter-box-bed-text"></p>
+        </div>
+
+        <!-- <div>
           <button
             mat-icon-button
             class="example-icon favorite-icon"
@@ -40,7 +57,49 @@
           >
             <mat-icon>favorite</mat-icon>
           </button>
-        </div>
+        </div> -->
+      </div>
+    </mat-toolbar>
+
+    <!-- PRICE RANGE -->
+    <mat-toolbar
+      color="primary"
+      style="background: #f2eef5"
+      *ngIf="togglePriceFilter"
+    >
+      <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100%">
+        <mat-slider
+          fxFlex="100%"
+          [max]="maxPrice"
+          [min]="minPrice"
+          [step]="10"
+          [thumbLabel]="true"
+          [(ngModel)]="selectedPrice"
+        >
+        </mat-slider>
+
+        <h4 (click)="filterRents()" style="color: #000000">Done</h4>
+      </div>
+    </mat-toolbar>
+
+    <!-- BEDROOMS -->
+    <mat-toolbar
+      color="primary"
+      style="background: #f2eef5"
+      *ngIf="toggleBedFilter"
+    >
+      <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100%">
+        <mat-slider
+          fxFlex="100%"
+          [max]="maxPrice"
+          [min]="minPrice"
+          [step]="10"
+          [thumbLabel]="true"
+          [(ngModel)]="selectedPrice"
+        >
+        </mat-slider>
+
+        <h4 (click)="filterRents()" style="color: #000000">Done</h4>
       </div>
     </mat-toolbar>
 
@@ -48,7 +107,7 @@
     <mat-nav-list class="apartment-list">
       <mat-card
         class="apartment-list-card"
-        *ngFor="let list of apartmentList.records"
+        *ngFor="let list of apartmentList.records | filterPrice: selectedPrice"
         routerLink="/smart-apartment"
         [queryParams]="{
           item: 'apartmentItem',
@@ -118,4 +177,22 @@
       </mat-card>
     </mat-nav-list>
   </div>
+
+  <ng-template #loader>
+    <div class="ph-item">
+      <div class="ph-col-12">
+        <div class="ph-row">
+          <div class="ph-col-6 big"></div>
+          <div class="ph-col-4 empty big"></div>
+          <div class="ph-col-2 big"></div>
+          <div class="ph-col-12 big"></div>
+          <div class="ph-col-12 big mb-50"></div>
+        </div>
+        <div class="ph-picture"></div>
+        <div class="ph-picture"></div>
+        <div class="ph-picture"></div>
+        <div class="ph-picture"></div>
+      </div>
+    </div>
+  </ng-template>
 </div>

@@ -25,6 +25,15 @@ export function ApartmentReducer(
         ...state,
         apartmentItem: action.payload,
       };
+    case ActionTypes.GET_FAVOURITE_APARTMENT_REQUEST:
+      return {
+        ...state,
+      };
+    case ActionTypes.GET_FAVOURITE_APARTMENT_SUCCESS:
+      return {
+        ...state,
+        favourite: action.payload,
+      };
     default: {
       return state;
     }
