@@ -9,7 +9,7 @@
 
     <div *ngIf="!showGallery">
       <mat-toolbar color="primary" class="company-info">
-        <h4 class="flex-center" routerLink="/smart-apartment">
+        <h4 class="flex-center" (click)="goBack()">
           <i class="material-icons arrow-back">arrow_back</i>
           Back to Results
         </h4>

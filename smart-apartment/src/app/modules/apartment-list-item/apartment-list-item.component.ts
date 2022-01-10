@@ -46,4 +46,9 @@ export class ApartmentListItemComponent implements OnInit {
   toggleGallery() {
     this.showGallery = !this.showGallery;
   }
+
+  goBack() {
+    this.router.navigate(['/smart-apartment']);
+    // this.store$.dispatch(new apartmentStoreActions.GetApartmentRequestAction());
+  }
 }

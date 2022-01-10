@@ -11,6 +11,6 @@ export class LayoutComponent implements OnInit {
   constructor(private store$: Store<RootStoreState.State>) {}
 
   ngOnInit(): void {
-    this.store$.dispatch(new apartmentStoreActions.GetApartmentRequestAction());
+    // this.store$.dispatch(new apartmentStoreActions.GetApartmentRequestAction());
   }
 }

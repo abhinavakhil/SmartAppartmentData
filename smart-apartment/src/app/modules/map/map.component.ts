@@ -6,8 +6,9 @@ import { environment } from '@env/environment';
 import { select, Store } from '@ngrx/store';
 import * as mapboxgl from 'mapbox-gl';
 import * as selectors from '@app/root-store/apartment-store/apartment.selector';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { ApartmentStoreEffects } from '@app/root-store/apartment-store/effects';
 
 @Component({
   selector: 'app-map',
@@ -15,209 +16,276 @@ import { Router } from '@angular/router';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  // apartmentList$: Observable<any> | undefined;
-
-  storeData: any;
-  markers: any = [];
-  map: mapboxgl.Map | undefined;
+  mapPins: any = [];
+  map!: mapboxgl.Map;
   style =
     'https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=CH1cYDfxBV9ZBu1lHGqh';
-  zoom = 12;
+  zoom = 12.7;
   lat = 45.899977;
   lng = 6.172652;
+  source: any;
+  markerElements: any = [];
+  mapLoaded: boolean = false;
+  subscription: Subscription = new Subscription();
 
   constructor(
     private mapService: MapService,
     private cd: ChangeDetectorRef,
     private router: Router,
-    private store$: Store<RootStoreState.State>
-  ) {}
-
-  ngOnInit() {
-    // this.apartmentList$ = this.store$.pipe(
-    //   select(selectors.getApartmentList())
-    // );
-    // this.storeData = DATA.features;
-    // this.selectedLink = null;
-    // mapboxgl.accessToken = environment.mapbox.accessToken;
-
-    this.map = new mapboxgl.Map({
-      accessToken: environment.mapbox.accessToken,
-      container: 'map',
-      style: this.style,
-      zoom: this.zoom,
-      center: [this.lng, this.lat],
-      scrollZoom: true,
-    });
-
-    // this.map.on('load', (e) => {
-    //   this.map.addSource('places', {
-    //     type: 'geojson',
-    //     data: DATA,
-    //   });
-    //   const geocoder = new MapboxGeocoder({
-    //     accessToken: mapboxgl.accessToken,
-    //     // comment below line will enlarge the range of search result
-    //     bbox: [-77.210763, 38.803367, -76.853675, 39.052643],
-    //   });
-    //   this.map.addControl(geocoder, 'top-left');
-    //   this.map.addSource('single-point', {
-    //     type: 'geojson',
-    //     data: {
-    //       type: 'FeatureCollection',
-    //       features: [], // Notice that initially there are no features
-    //     },
-    //   });
-    //   this.map.addLayer({
-    //     id: 'point',
-    //     source: 'single-point',
-    //     type: 'circle',
-    //     paint: {
-    //       'circle-radius': 10,
-    //       'circle-color': '#007cbf',
-    //       'circle-stroke-width': 3,
-    //       'circle-stroke-color': '#fff',
-    //     },
-    //   });
-    //   // evt handler when select search result from search bar
-    //   geocoder.on('result', (ev) => {
-    //     const searchResult = ev.result.geometry;
-    //     this.map.getSource('single-point').setData(searchResult);
-    //     this.buildLocationList(searchResult);
-    //     this.sortLonLat(0, searchResult);
-    //     this.createPopUp(this.storeData[0]);
-    //   });
+    private store$: Store<RootStoreState.State>,
+    private store: Store,
+    private apartmentService: ApartmentStoreEffects
+  ) {
+    // this.store.select(getMapPins).subscribe((mapPins) => {
+    //   this.mapPins = mapPins;
+    //   if (mapPins.length > 1 && this.mapLoaded) {
+    //     this.loadMapWithPins();
+    //   } else if (mapPins.length == 1 && this.mapLoaded) {
+    //     this.zoomToMarker();
+    //   }
     // });
 
-    // this.storeData.forEach((marker, index) => {
-    //   const el = document.createElement('div');
-    //   // Add a class called 'marker' to each div
-    //   el.className = 'marker';
-    //   // By default the image for your custom marker will be anchored
-    //   // by its center. Adjust the position accordingly
-    //   // Create the custom markers, set their position, and add to map
-    //   new mapboxgl.Marker(el, { offset: [0, -23] })
-    //     .setLngLat(marker.geometry.coordinates)
-    //     .addTo(this.map);
+    this.subscription.add(
+      this.apartmentService.apartmentObject.subscribe((data: any) => {
+        console.log(data);
+        if (
+          data &&
+          data.apartment &&
+          data.apartment?.records &&
+          this.mapLoaded &&
+          !data.productId
+        ) {
+          this.mapPins = [...data.apartment.records];
+          this.loadMapWithPins();
+          this.cd.markForCheck();
+        } else if (data.productId && data.apartmentItem && this.mapLoaded) {
+          this.mapPins = [];
 
-    //   el.addEventListener('click', (e) => {
-    //     const activeItem = document.getElementsByClassName('active');
-    //     this.flyToStore(marker);
-    //     this.createPopUp(marker);
-    //     e.stopPropagation();
-    //     this.selectedLink = index;
-    //   });
-    // });
+          this.mapPins.push(data?.apartmentItem);
+          this.zoomToMarker();
+          this.cd.detectChanges();
+        }
+      })
+    );
   }
 
-  // getCenterCoordinates() {
-  //   const boundary: any[] = [];
-  //   this.markers.forEach(function (marker: any) {
-  //     boundary.push(
-  //       new mapboxgl.LngLat(marker.coordinates[0], marker.coordinates[1])
-  //     );
-  //   });
-  //   let coordinates = new mapboxgl.LngLatBounds(...boundary);
-  //   const centerCoordinates = coordinates.getCenter();
-  //   return centerCoordinates;
-  // }
+  ngOnInit() {
+    this.store$
+      .pipe(select(selectors.getApartmentsData()))
+      .subscribe((response) => {
+        console.log(response);
 
-  // sortLonLat(storeIdentifier, searchResult) {
-  //   const lats = [
-  //     this.storeData[storeIdentifier].geometry.coordinates[1],
-  //     searchResult.coordinates[1],
-  //   ];
-  //   const lngs = [
-  //     this.storeData[storeIdentifier].geometry.coordinates[0],
-  //     searchResult.coordinates[0],
-  //   ];
+        if (response?.length > 1) {
+          this.mapPins = [...response];
+          this.buildInitMap();
+          this.cd.detectChanges();
+        }
+      });
+  }
 
-  //   const sortedLngs = lngs.sort(function (a, b) {
-  //     if (a > b) {
-  //       return 1;
-  //     }
-  //     if (a.distance < b.distance) {
-  //       return -1;
-  //     }
-  //     return 0;
-  //   });
-  //   const sortedLats = lats.sort(function (a, b) {
-  //     if (a > b) {
-  //       return 1;
-  //     }
-  //     if (a.distance < b.distance) {
-  //       return -1;
-  //     }
-  //     return 0;
-  //   });
+  /**
+   * create map/map configuration
+   */
+  buildInitMap() {
+    try {
+      this.map = new mapboxgl.Map({
+        accessToken: environment.mapbox.accessToken,
+        container: 'map',
+        style: this.style,
+        zoom: this.zoom,
+        center: this.getCenterCoordinates(),
+        scrollZoom: true,
+      });
 
-  //   this.map.fitBounds(
-  //     [
-  //       [sortedLngs[0], sortedLats[0]],
-  //       [sortedLngs[1], sortedLats[1]],
-  //     ],
-  //     {
-  //       padding: 100,
-  //     }
-  //   );
-  // }
+      /// Add data on map load
+      this.map.on('load', (event) => {
+        /// register source
+        const markersPins: any = this.convertMapPinsToMarkers(this.mapPins);
+        this.map?.addSource('smartApartments', {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: markersPins,
+          },
+        });
+        /// get source
+        this.source = this.map?.getSource('smartApartments');
+        /// create map layers
+        this.map?.addLayer({
+          id: 'smartApartments',
+          source: 'smartApartments',
+          type: 'symbol',
+          layout: {
+            'text-size': 24,
+            'text-transform': 'uppercase',
+            'text-offset': [0, 1.5],
+          },
+          paint: {
+            'text-color': '#f16624',
+            'text-halo-color': '#fff',
+            'text-halo-width': 2,
+          },
+        });
+        this.mapLoaded = true;
+        this.loadMapWithPins();
+      });
+    } catch (e) {}
+  }
 
-  // buildLocationList(searchResult) {
-  //   // add distance property to store data
-  //   this.storeData.forEach((store) => {
-  //     Object.defineProperty(store.properties, 'distance', {
-  //       value: distance(searchResult, store.geometry),
-  //       writable: true,
-  //       enumerable: true,
-  //       configurable: true,
-  //     });
-  //     store.properties['distance'] = this.roundValue(
-  //       store.properties['distance']
-  //     );
-  //   });
-  //   // sort the location list
-  //   this.storeData.sort((a, b) => {
-  //     if (a.properties.distance > b.properties.distance) {
-  //       return 1;
-  //     }
-  //     if (a.properties.distance < b.properties.distance) {
-  //       return -1;
-  //     }
-  //     // a must be equal to b
-  //     return 0;
-  //   });
-  // }
+  /**
+   * geoSon format
+   * @param mapPins
+   * @returns
+   */
+  convertMapPinsToMarkers(mapPins: any[]) {
+    return mapPins.map((mapPin) => ({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [mapPin.geocode.Longitude, mapPin.geocode.Latitude],
+      },
+      properties: {},
+    }));
+  }
 
-  // private roundValue(val) {
-  //   return Math.round(val * 100) / 100;
-  // }
+  /**
+   * Load Map with all the markers
+   */
+  loadMapWithPins() {
+    // delete all maerkers
+    this.markerElements.forEach((markerToRemove: any) => {
+      let markerPinLayer: any = document.getElementById(
+        markerToRemove.propertyid
+      );
+      try {
+        markerPinLayer.remove();
+      } catch (e) {}
+    });
 
-  // flyToStore(currentFeature) {
-  //   this.map.flyTo({
-  //     center: currentFeature.geometry.coordinates,
-  //     zoom: 15,
-  //   });
-  // }
+    this.markerElements = [];
+    // add markers to map
+    const bounds = [];
+    console.log(this.mapPins);
+    this.mapPins.forEach((marker: any) => {
+      // make a marker for each feature and add it to the map as a layer
+      bounds.push(
+        new mapboxgl.LngLat(marker.geocode.Longitude, marker.geocode.Latitude)
+      );
 
-  // createPopUp(currentFeature) {
-  //   const popUps = document.getElementsByClassName('mapboxgl-popup');
-  //   // Check if there is already a popup on the map and if so, remove it
-  //   if (popUps[0]) {
-  //     popUps[0].remove();
-  //   }
-  //   const popup = new mapboxgl.Popup({ closeOnClick: false })
-  //     .setLngLat(currentFeature.geometry.coordinates)
-  //     .setHTML(
-  //       `<h3>Sweetgreen</h3><h4>${currentFeature.properties.address}</h4>`
-  //     )
-  //     .addTo(this.map);
-  // }
+      // create custom marker html
+      let el: any = document.createElement('div');
+      el.className = 'marker';
+      el.id = marker?.propertyID;
+      el['data-coordinates'] = JSON.stringify([
+        marker.geocode.Longitude,
+        marker.geocode.Latitude,
+      ]);
+      // el.style.backgroundImage = marker?.favorite
+      //   ? 'url(https://my.smartapartmentdata.com/assets/images/map-circle-red.svg)'
+      //   : 'url(https://my.smartapartmentdata.com/assets/images/map-circle-red.svg)';
 
-  // moveAndShowInfo(currentFeature, index) {
-  //   this.flyToStore(currentFeature);
-  //   this.createPopUp(currentFeature);
-  //   this.selectedLink = index;
-  // }
+      el.style.backgroundImage = marker?.favorite
+        ? 'url(/assets/svg/pin-red-heart.svg)'
+        : 'url(/assets/svg/pin-red.svg)';
+
+      el.style.width = marker?.favorite ? '52px' : '40px';
+      el.style.height = marker?.favorite ? '52px' : '40px';
+      el.style.backgroundSize = '100%';
+      // create custom marker html
+      const markerElement = new mapboxgl.Marker(el)
+        .setLngLat([marker.geocode.Longitude, marker.geocode.Latitude])
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            `<h4>${marker?.name}</h4>
+          <p style="color: #6c757d">
+          ${marker?.city}, ${marker?.streetAddress}
+          </p>`
+          )
+        )
+        .addTo(this.map);
+      this.markerElements.push({
+        ...markerElement,
+        propertyid: marker?.propertyID,
+      });
+      const markerDiv = markerElement.getElement();
+      markerDiv.addEventListener('mouseenter', () =>
+        markerElement.togglePopup()
+      );
+      markerDiv.addEventListener('mouseleave', () =>
+        markerElement.togglePopup()
+      );
+
+      markerElement.getElement().addEventListener('click', (event: any) => {
+        const propertyCoordinates = JSON.parse(
+          event?.srcElement['data-coordinates'] || ''
+        );
+        this.map.flyTo({
+          center: propertyCoordinates,
+          essential: true,
+          zoom: 16,
+        });
+
+        // remove detail pop-up
+        markerElement.togglePopup();
+        const propertyId = event?.srcElement['id'] || '';
+        this.router.navigate(['/smart-apartment'], {
+          queryParams: { item: 'apartmentItem', propertyId: propertyId },
+        });
+      });
+    });
+
+    this.map.flyTo({
+      center: this.getCenterCoordinates(),
+      // center: [this.lng, this.lat],
+      essential: true,
+      zoom: 12.7,
+    });
+  }
+
+  /**
+   * get the center coordinates
+   * @returns
+   */
+  getCenterCoordinates() {
+    const bounds: any = [];
+    this.mapPins.forEach(function (marker: any) {
+      bounds.push(
+        new mapboxgl.LngLat(marker.geocode.Longitude, marker.geocode.Latitude)
+      );
+    });
+    let llb = new mapboxgl.LngLatBounds(...bounds);
+    const centerCoordinates = llb.getCenter();
+    return centerCoordinates;
+  }
+
+  /**
+   * zoom to the selected marker
+   */
+  zoomToMarker() {
+    const focusedMarker = this.mapPins[0];
+    console.log(focusedMarker, this.markerElements);
+    try {
+      const toRemoveMarkers = this.markerElements.filter(
+        (markerElement: any) =>
+          markerElement.propertyid !== focusedMarker.propertyID
+      );
+      toRemoveMarkers.forEach((markerToRemove: any) => {
+        let markerPinLayer: any = document.getElementById(
+          markerToRemove.propertyid
+        );
+        markerPinLayer.remove();
+      });
+      // fly to marker
+      this.map.flyTo({
+        center: [
+          focusedMarker.geocode.Longitude,
+          focusedMarker.geocode.Latitude,
+        ],
+        essential: true,
+        zoom: 16,
+      });
+    } catch (e) {}
+  }
 
   ngOnDestroy(): void {}
 }

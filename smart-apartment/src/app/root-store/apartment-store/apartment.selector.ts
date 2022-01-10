@@ -14,6 +14,16 @@ export const getApartmentList = () =>
     }
   });
 
+export const getApartmentsData = () =>
+  createSelector(selectItems, (items) => {
+    {
+      if (items != null && items['apartment']) {
+        return items['apartment']['records'];
+      }
+      return null;
+    }
+  });
+
 export const getApartmentItemList = () =>
   createSelector(selectItems, (items) => {
     {
