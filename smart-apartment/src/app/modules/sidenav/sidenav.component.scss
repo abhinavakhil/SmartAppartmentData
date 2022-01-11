@@ -1,3 +1,5 @@
+@import "../../../assets/styles/sass/styles.scss";
+
 .sidenav {
   position: relative;
 
@@ -7,7 +9,7 @@
 
     ::ng-deep {
       .mat-drawer-side {
-        background-color: white;
+        background-color: $text-white;
         width: 450px;
         border-right: 3px solid #f0f1f2;
       }

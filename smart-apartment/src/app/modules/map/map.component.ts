@@ -36,15 +36,6 @@ export class MapComponent implements OnInit {
     private store: Store,
     private apartmentService: ApartmentStoreEffects
   ) {
-    // this.store.select(getMapPins).subscribe((mapPins) => {
-    //   this.mapPins = mapPins;
-    //   if (mapPins.length > 1 && this.mapLoaded) {
-    //     this.loadMapWithPins();
-    //   } else if (mapPins.length == 1 && this.mapLoaded) {
-    //     this.zoomToMarker();
-    //   }
-    // });
-
     this.subscription.add(
       this.apartmentService.apartmentObject.subscribe((data: any) => {
         console.log(data);
@@ -53,7 +44,7 @@ export class MapComponent implements OnInit {
           data.apartment &&
           data.apartment?.records &&
           this.mapLoaded &&
-          !data.productId
+          data.productId == -1
         ) {
           this.mapPins = [...data.apartment.records];
           this.loadMapWithPins();
@@ -73,8 +64,6 @@ export class MapComponent implements OnInit {
     this.store$
       .pipe(select(selectors.getApartmentsData()))
       .subscribe((response) => {
-        console.log(response);
-
         if (response?.length > 1) {
           this.mapPins = [...response];
           this.buildInitMap();
@@ -165,7 +154,6 @@ export class MapComponent implements OnInit {
     this.markerElements = [];
     // add markers to map
     const bounds = [];
-    console.log(this.mapPins);
     this.mapPins.forEach((marker: any) => {
       // make a marker for each feature and add it to the map as a layer
       bounds.push(
@@ -180,16 +168,16 @@ export class MapComponent implements OnInit {
         marker.geocode.Longitude,
         marker.geocode.Latitude,
       ]);
-      // el.style.backgroundImage = marker?.favorite
-      //   ? 'url(https://my.smartapartmentdata.com/assets/images/map-circle-red.svg)'
-      //   : 'url(https://my.smartapartmentdata.com/assets/images/map-circle-red.svg)';
-
       el.style.backgroundImage = marker?.favorite
-        ? 'url(/assets/svg/pin-red-heart.svg)'
-        : 'url(/assets/svg/pin-red.svg)';
+        ? 'url(https://my.smartapartmentdata.com/assets/images/map-circle-red.svg)'
+        : 'url(https://my.smartapartmentdata.com/assets/images/map-circle-red.svg)';
 
-      el.style.width = marker?.favorite ? '52px' : '40px';
-      el.style.height = marker?.favorite ? '52px' : '40px';
+      // el.style.backgroundImage = marker?.favorite
+      //   ? 'url(/assets/svg/pin-red-heart.svg)'
+      //   : 'url(/assets/svg/pin-red.svg)';
+
+      el.style.width = marker?.favorite ? '102px' : '80px';
+      el.style.height = marker?.favorite ? '102px' : '80px';
       el.style.backgroundSize = '100%';
       // create custom marker html
       const markerElement = new mapboxgl.Marker(el)
@@ -263,7 +251,6 @@ export class MapComponent implements OnInit {
    */
   zoomToMarker() {
     const focusedMarker = this.mapPins[0];
-    console.log(focusedMarker, this.markerElements);
     try {
       const toRemoveMarkers = this.markerElements.filter(
         (markerElement: any) =>

@@ -1,0 +1,31 @@
+@import "./variable.scss";
+
+@mixin mq($args) {
+  @media screen and (max-width: $args) {
+    @content;
+  }
+}
+
+@mixin res-phone {
+  @media (max-width: $break-sm) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: 1000px) {
+    @content;
+  }
+}
+
+@mixin tab-land {
+  @media (max-width: 812px) {
+    @content;
+  }
+}
+
+@mixin port-tab {
+  @media (max-width: 620px) {
+    @content;
+  }
+}

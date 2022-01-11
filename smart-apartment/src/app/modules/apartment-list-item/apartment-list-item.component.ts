@@ -49,8 +49,11 @@ export class ApartmentListItemComponent implements OnInit {
   }
 
   goBack() {
+    this.store$.dispatch(
+      new apartmentStoreActions.RemoveApartmentItemRequestAction()
+    );
+
     this.router.navigate(['/smart-apartment']);
-    // this.store$.dispatch(new apartmentStoreActions.GetApartmentRequestAction());
   }
 
   toggleFavourite(apartmentItem: any) {

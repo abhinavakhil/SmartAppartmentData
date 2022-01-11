@@ -7,6 +7,8 @@ export enum ActionTypes {
   GET_APARTMENT_ITEM_REQUEST = '[GET_APARTMENT_ITEM] Request',
   GET_APARTMENT_ITEM_SUCCESS = '[GET_APARTMENT_ITEM] Success',
 
+  REMOVE_APARTMENT_ITEM_SUCCESS = '[REMOVE_APARTMENT_ITEM_SUCCESS] Success',
+
   GET_FAVOURITE_APARTMENT_REQUEST = '[GET_FAVOURITE_APARTMENT] Request',
   GET_FAVOURITE_APARTMENT_SUCCESS = '[GET_FAVOURITE_APARTMENT] Success',
 }
@@ -30,6 +32,10 @@ export class GetApartmentItemSuccessAction implements Action {
   constructor(public payload: any) {}
 }
 
+export class RemoveApartmentItemRequestAction implements Action {
+  readonly type = ActionTypes.REMOVE_APARTMENT_ITEM_SUCCESS;
+}
+
 export class GetFavouriteApartmentRequestAction implements Action {
   readonly type = ActionTypes.GET_FAVOURITE_APARTMENT_REQUEST;
 }
@@ -44,5 +50,6 @@ export type Actions =
   | GetApartmentSuccessAction
   | GetApartmentItemRequestAction
   | GetApartmentItemSuccessAction
+  | RemoveApartmentItemRequestAction
   | GetFavouriteApartmentRequestAction
   | GetFavouriteApartmentSuccessAction;

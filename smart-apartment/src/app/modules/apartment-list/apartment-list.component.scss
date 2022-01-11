@@ -1,18 +1,12 @@
+@import "../../../assets/styles/sass/styles.scss";
+
 .apartment-list-container {
-  h4 {
-    font-size: 14px;
-    margin-bottom: 0px;
-    cursor: pointer;
+  .company-info {
+    height: 40px;
   }
 
   p {
-    color: #909090;
-    font-size: 13px;
-    margin-bottom: 0px;
-  }
-
-  .company-info {
-    height: 40px;
+    color: $paragraph-primary;
   }
 
   .apartment-list {
@@ -80,5 +74,9 @@
         }
       }
     }
+  }
+
+  .bedroom-checkbox {
+    color: $color-black;
   }
 }

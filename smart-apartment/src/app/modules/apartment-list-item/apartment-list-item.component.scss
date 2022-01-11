@@ -1,12 +1,9 @@
-.apartment-list-item-container {
-  h4 {
-    font-size: 14px;
-    margin-bottom: 0px;
-  }
+@import "../../../assets/styles/sass/styles.scss";
 
-  p {
-    font-size: 13px;
-    margin-bottom: 0px;
+.apartment-list-item-container {
+  h4,
+  h6 {
+    color: $text-white;
   }
 
   .city {
@@ -17,12 +14,6 @@
   .company-info {
     height: 40px;
     cursor: pointer;
-
-    .flex-center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
 
     .arrow-back {
       font-size: 14px;
@@ -44,23 +35,15 @@
         position: absolute;
         bottom: 38px;
         left: 39px;
-        background: #673ab7;
-        color: #ffffff;
+        background: $primary-color-contrast;
+        color: $text-white;
         padding: 10px;
       }
     }
   }
 
-  .mr-5 {
-    margin-right: 5px;
-  }
-
   .favButton {
-    background: #f44336;
-    color: #fff;
-  }
-
-  .mb-50 {
-    margin-bottom: 50px;
+    background: $red-color;
+    color: $text-white;
   }
 }

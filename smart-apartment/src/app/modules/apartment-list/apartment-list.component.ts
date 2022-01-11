@@ -16,6 +16,10 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
   minPrice: number = 0;
   maxPrice: number = 0;
   selectedPrice: number = 0;
+  studio: boolean = true;
+  oneBed: boolean = true;
+  twoBed: boolean = true;
+  threeBed: boolean = true;
   apartmentRangeList: Array<any> = [];
   subscription: Subscription = new Subscription();
 
@@ -33,10 +37,12 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
   }
 
   filterRents() {
+    this.toggleBedFilter = false;
     this.togglePriceFilter = !this.togglePriceFilter;
   }
 
   filterBeds() {
+    this.togglePriceFilter = false;
     this.toggleBedFilter = !this.toggleBedFilter;
   }
 

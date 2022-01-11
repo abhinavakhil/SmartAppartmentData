@@ -25,6 +25,12 @@ export function ApartmentReducer(
         ...state,
         apartmentItem: action.payload,
       };
+    case ActionTypes.REMOVE_APARTMENT_ITEM_SUCCESS:
+      return {
+        ...state,
+        apartmentItem: null,
+        productId: -1,
+      };
     case ActionTypes.GET_FAVOURITE_APARTMENT_REQUEST:
       return {
         ...state,

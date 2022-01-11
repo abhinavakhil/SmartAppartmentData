@@ -11,7 +11,7 @@
       </h4>
     </mat-toolbar>
 
-    <mat-toolbar color="primary" style="background: #8565d9">
+    <mat-toolbar class="primary-light">
       <div
         fxLayout="row"
         fxLayoutAlign="space-between center"
@@ -46,27 +46,17 @@
             />
           </p>
 
-          <p class="filter-box-bed-text"></p>
+          <p class="filter-box-bed-text">
+            {{ studio ? "Studio ," : null }}
+            {{ oneBed ? " 1 Bed ," : null }} {{ twoBed ? " 2 Bed ," : null }}
+            {{ threeBed ? " 3 Bed " : null }}
+          </p>
         </div>
-
-        <!-- <div>
-          <button
-            mat-icon-button
-            class="example-icon favorite-icon"
-            aria-label="Example icon-button with heart icon"
-          >
-            <mat-icon>favorite</mat-icon>
-          </button>
-        </div> -->
       </div>
     </mat-toolbar>
 
     <!-- PRICE RANGE -->
-    <mat-toolbar
-      color="primary"
-      style="background: #f2eef5"
-      *ngIf="togglePriceFilter"
-    >
+    <mat-toolbar class="secondary" *ngIf="togglePriceFilter">
       <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100%">
         <mat-slider
           fxFlex="100%"
@@ -88,18 +78,21 @@
       style="background: #f2eef5"
       *ngIf="toggleBedFilter"
     >
-      <div fxLayout="row" fxLayoutAlign="center center" fxFlex="100%">
-        <mat-slider
-          fxFlex="100%"
-          [max]="maxPrice"
-          [min]="minPrice"
-          [step]="10"
-          [thumbLabel]="true"
-          [(ngModel)]="selectedPrice"
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100%">
+        <mat-checkbox class="bedroom-checkbox" [(ngModel)]="studio"
+          >Studio</mat-checkbox
         >
-        </mat-slider>
+        <mat-checkbox class="bedroom-checkbox" [(ngModel)]="oneBed"
+          >1 Bed</mat-checkbox
+        >
+        <mat-checkbox class="bedroom-checkbox" [(ngModel)]="twoBed"
+          >2 Bed</mat-checkbox
+        >
+        <mat-checkbox class="bedroom-checkbox" [(ngModel)]="threeBed"
+          >3 Bed</mat-checkbox
+        >
 
-        <h4 (click)="filterRents()" style="color: #000000">Done</h4>
+        <h4 (click)="filterBeds()" style="color: #000000">Done</h4>
       </div>
     </mat-toolbar>
 
@@ -107,7 +100,11 @@
     <mat-nav-list class="apartment-list">
       <mat-card
         class="apartment-list-card"
-        *ngFor="let list of apartmentList.records | filterPrice: selectedPrice"
+        *ngFor="
+          let list of apartmentList.records
+            | filterPrice: selectedPrice
+            | filterBedrooms: studio:oneBed:twoBed:threeBed
+        "
         routerLink="/smart-apartment"
         [queryParams]="{
           item: 'apartmentItem',
@@ -125,7 +122,13 @@
                 fxLayoutAlign="space-between center"
                 class="apartment-list-details"
               >
-                <div *ngFor="let floor of list.floorplans">
+                <div
+                  *ngFor="
+                    let floor of list.floorplans
+                      | filterPriceItem: selectedPrice
+                      | filterBedroomItem: studio:oneBed:twoBed:threeBed
+                  "
+                >
                   <div fxLayout="row">
                     <img
                       src="https://my.smartapartmentdata.com/assets/images/0-bed.svg"
