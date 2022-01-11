@@ -62,13 +62,3 @@ export const getApartmentRange = () =>
       }
     }
   });
-
-export const getFavouriteApartmentItemList = () =>
-  createSelector(selectItems, (items) => {
-    {
-      if (items != null && items['favourite']) {
-        return items['favourite'];
-      }
-      return null;
-    }
-  });

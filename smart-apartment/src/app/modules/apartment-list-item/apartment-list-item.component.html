@@ -27,8 +27,15 @@
             <h6 class="city">{{ apartmentItem.city }}</h6>
           </div>
 
-          <div (click)="toggleFavourite(apartmentItem)">
-            <button mat-fab [ngClass]="{ favButton: changeColor }">
+          <div
+            (click)="toggleFavorite(apartmentItem, favoritesList[0]?.favorite)"
+          >
+            <button
+              mat-fab
+              [ngClass]="{
+                favButton: changeColor || favoritesList[0]?.favorite
+              }"
+            >
               <mat-icon>favorite</mat-icon>
             </button>
           </div>

@@ -3,6 +3,7 @@ import { RootStoreState } from '@app/root-store';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import * as selectors from '@app/root-store/apartment-store/apartment.selector';
+import { CommonService } from '@app/shared/services/common/common.service';
 
 @Component({
   selector: 'app-apartment-list',
@@ -20,11 +21,14 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
   oneBed: boolean = true;
   twoBed: boolean = true;
   threeBed: boolean = true;
+  showFavorites: boolean = false;
   apartmentRangeList: Array<any> = [];
+  favoritesList: Array<any> = [];
   subscription: Subscription = new Subscription();
 
   constructor(
     private store$: Store<RootStoreState.State>,
+    private commonService: CommonService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -34,6 +38,7 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
     );
 
     this.getPriceRange();
+    this.getFavorites();
   }
 
   /**
@@ -72,6 +77,10 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  getFavorites() {
+    this.favoritesList = this.commonService.getFavourities();
   }
 
   ngOnDestroy() {

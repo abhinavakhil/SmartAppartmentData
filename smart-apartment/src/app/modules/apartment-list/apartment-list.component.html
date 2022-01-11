@@ -103,7 +103,8 @@
         *ngFor="
           let list of apartmentList.records
             | filterPrice: selectedPrice
-            | filterBedrooms: studio:oneBed:twoBed:threeBed
+            | filterBedrooms: studio:oneBed:twoBed:threeBed;
+          index as i
         "
         routerLink="/smart-apartment"
         [queryParams]="{
@@ -114,7 +115,15 @@
         <mat-card-content>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="column" fxLayoutAlign="start start">
-              <h4>{{ list.name }}</h4>
+              <h4>
+                {{ list.name }}
+
+                <span *ngIf="favoritesList && favoritesList[i]?.favorite">
+                  <mat-icon mat-button color="warn" class="favorite"
+                    >favorite</mat-icon
+                  >
+                </span>
+              </h4>
               <p>{{ list.streetAddress }}, {{ list.city }}</p>
 
               <div

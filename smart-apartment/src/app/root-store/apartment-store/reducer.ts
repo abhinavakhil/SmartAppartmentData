@@ -31,15 +31,6 @@ export function ApartmentReducer(
         apartmentItem: null,
         productId: -1,
       };
-    case ActionTypes.GET_FAVOURITE_APARTMENT_REQUEST:
-      return {
-        ...state,
-      };
-    case ActionTypes.GET_FAVOURITE_APARTMENT_SUCCESS:
-      return {
-        ...state,
-        favourite: action.payload,
-      };
     default: {
       return state;
     }
