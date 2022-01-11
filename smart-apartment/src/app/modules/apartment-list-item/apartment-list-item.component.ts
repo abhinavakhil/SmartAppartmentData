@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { apartmentStoreActions, RootStoreState } from '@app/root-store';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { HttpParams } from '@angular/common/http';
   templateUrl: './apartment-list-item.component.html',
   styleUrls: ['./apartment-list-item.component.scss'],
 })
-export class ApartmentListItemComponent implements OnInit {
+export class ApartmentListItemComponent implements OnInit, OnDestroy {
   apartmentItemList$: Observable<any> | undefined;
   subscription: Subscription = new Subscription();
   activeQuery: any;
@@ -44,10 +44,16 @@ export class ApartmentListItemComponent implements OnInit {
     );
   }
 
+  /**
+   * TOGGLE GALLERY
+   */
   toggleGallery() {
     this.showGallery = !this.showGallery;
   }
 
+  /**
+   * PREVIOUS ( GO BACK )
+   */
   goBack() {
     this.store$.dispatch(
       new apartmentStoreActions.RemoveApartmentItemRequestAction()
@@ -56,6 +62,10 @@ export class ApartmentListItemComponent implements OnInit {
     this.router.navigate(['/smart-apartment']);
   }
 
+  /**
+   *
+   * @param apartmentItem
+   */
   toggleFavourite(apartmentItem: any) {
     this.changeColor = !this.changeColor;
     const item = { ...apartmentItem };
@@ -95,5 +105,9 @@ export class ApartmentListItemComponent implements OnInit {
     //       );
     //     }
     //   });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

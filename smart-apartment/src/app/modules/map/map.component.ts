@@ -19,7 +19,7 @@ export class MapComponent implements OnInit {
   map!: mapboxgl.Map;
   style =
     'https://api.maptiler.com/maps/eef16200-c4cc-4285-9370-c71ca24bb42d/style.json?key=CH1cYDfxBV9ZBu1lHGqh';
-  zoom = 12.7;
+  zoom = 11.6;
   lat = 45.899977;
   lng = 6.172652;
   source: any;
@@ -239,7 +239,7 @@ export class MapComponent implements OnInit {
     this.map.flyTo({
       center: this.getMapCenterCoordinates(),
       essential: true,
-      zoom: 12.7,
+      zoom: 11.6,
     });
   }
 

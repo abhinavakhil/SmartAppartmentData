@@ -20,11 +20,18 @@ export class GalleryComponent implements OnInit {
     });
   }
 
+  /**
+   * SHOW LIGHBOX
+   * @param index INDEX
+   */
   showLightbox(index: any) {
     this.currentIndex = index;
     this.showFlag = true;
   }
 
+  /**
+   * CLOSE IMAGE GALLERY
+   */
   closeEventHandler() {
     this.showFlag = false;
     this.currentIndex = -1;

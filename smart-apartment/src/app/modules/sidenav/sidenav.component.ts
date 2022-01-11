@@ -20,10 +20,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(
     private cd: ChangeDetectorRef,
     private media: MediaMatcher,
-    private activatedRoute: ActivatedRoute,
-    private store$: Store<RootStoreState.State>
+    private activatedRoute: ActivatedRoute
   ) {
-    //sidenav
     this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => this.cd.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -33,22 +31,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.activatedRoute.queryParams.subscribe((params) => {
         this.activeQuery = { ...params };
-        console.log(params);
-
-        // if (params?.propertyId) {
-        //   alert(params.propertyId);
-        //   this.store$.dispatch(
-        //     new apartmentStoreActions.GetApartmentItemRequestAction(
-        //       +params?.propertyId
-        //     )
-        //   );
-        // }
       })
     );
   }
 
   ngOnDestroy(): void {
-    //sidenav
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 }

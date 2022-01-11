@@ -36,16 +36,25 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
     this.getPriceRange();
   }
 
-  filterRents() {
+  /**
+   * TOGGLE RENTS PRICE BUTTON
+   */
+  toggleRents() {
     this.toggleBedFilter = false;
     this.togglePriceFilter = !this.togglePriceFilter;
   }
 
-  filterBeds() {
+  /**
+   * TOGGLE BEDROOMS BUTTON
+   */
+  toggleBeds() {
     this.togglePriceFilter = false;
     this.toggleBedFilter = !this.toggleBedFilter;
   }
 
+  /**
+   * GET PRICE RANGE & MIN AND MAX PRICE
+   */
   getPriceRange() {
     this.subscription.add(
       this.store$

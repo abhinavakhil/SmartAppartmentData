@@ -15,6 +15,10 @@ export class PlansComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /**
+   * OPEN DIALOG TO SHOW SQFT IMAGE
+   * @param plan
+   */
   openPlanDialog(plan: any) {
     const dialogRef = this.dialog.open(PlanDialogComponent, {
       data: { plan: plan },

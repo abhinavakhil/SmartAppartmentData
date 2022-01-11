@@ -18,7 +18,7 @@
         fxFlex="100"
         class="filter-box"
       >
-        <div class="filter-box-rent" (click)="filterRents()">
+        <div class="filter-box-rent" (click)="toggleRents()">
           <p class="filter-box-rent-text">
             Rent
             <img
@@ -37,7 +37,7 @@
           </p>
         </div>
 
-        <div class="filter-box-bed" (click)="filterBeds()">
+        <div class="filter-box-bed" (click)="toggleBeds()">
           <p class="filter-box-bed-text">
             Bedrooms
             <img
@@ -68,7 +68,7 @@
         >
         </mat-slider>
 
-        <h4 (click)="filterRents()" style="color: #000000">Done</h4>
+        <h4 (click)="toggleRents()" style="color: #000000">Done</h4>
       </div>
     </mat-toolbar>
 
@@ -92,7 +92,7 @@
           >3 Bed</mat-checkbox
         >
 
-        <h4 (click)="filterBeds()" style="color: #000000">Done</h4>
+        <h4 (click)="toggleBeds()" style="color: #000000">Done</h4>
       </div>
     </mat-toolbar>
 
