@@ -1,14 +1,20 @@
 <div class="apartment-list-container">
   <div *ngIf="apartmentList$ | async as apartmentList; else loader">
     <mat-toolbar color="primary" class="company-info">
-      <h4>
-        {{
-          apartmentList.agentInfo?.firstname +
-            " " +
-            apartmentList.agentInfo?.lastname
-        }}
-        | {{ apartmentList.agentInfo?.company }}
-      </h4>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100%">
+        <h4>
+          {{
+            apartmentList.agentInfo?.firstname +
+              " " +
+              apartmentList.agentInfo?.lastname
+          }}
+          | {{ apartmentList.agentInfo?.company }}
+        </h4>
+
+        <div fxLayout="row" (click)="openSidenav()">
+          <mat-icon>map</mat-icon>
+        </div>
+      </div>
     </mat-toolbar>
 
     <mat-toolbar class="primary-light">
@@ -126,11 +132,7 @@
               </h4>
               <p>{{ list.streetAddress }}, {{ list.city }}</p>
 
-              <div
-                fxLayout="row"
-                fxLayoutAlign="space-between center"
-                class="apartment-list-details"
-              >
+              <div fxLayout="row wrap" class="apartment-list-details">
                 <div
                   *ngFor="
                     let floor of list.floorplans

@@ -1,1 +1,7 @@
 <div id="map" class="map-container"></div>
+
+<div class="menu-item" *ngIf="!sidenavState._opened" (click)="closeSidenav()">
+  <button mat-mini-fab color="primary">
+    <mat-icon>menu</mat-icon>
+  </button>
+</div>

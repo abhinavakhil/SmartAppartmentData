@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { RootStoreState } from '@app/root-store';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -11,6 +19,7 @@ import { CommonService } from '@app/shared/services/common/common.service';
   styleUrls: ['./apartment-list.component.scss'],
 })
 export class ApartmentListComponent implements OnInit, OnDestroy {
+  @Output() openSidenavClick: EventEmitter<any> = new EventEmitter<any>();
   apartmentList$: Observable<any> | undefined;
   togglePriceFilter: boolean = false;
   toggleBedFilter: boolean = false;
@@ -81,6 +90,10 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
 
   getFavorites() {
     this.favoritesList = this.commonService.getFavourities();
+  }
+
+  openSidenav() {
+    this.openSidenavClick.emit('open');
   }
 
   ngOnDestroy() {

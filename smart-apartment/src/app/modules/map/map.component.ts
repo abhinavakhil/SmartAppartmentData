@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { RootStoreState } from '@app/root-store';
 import * as selectors from '@app/root-store/apartment-store/apartment.selector';
@@ -15,6 +22,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  @Input() sidenavState: any;
+  @Output() openSidenavClick: EventEmitter<any> = new EventEmitter<any>();
+
   mapPins: any = [];
   map!: mapboxgl.Map;
   style =
@@ -74,6 +84,8 @@ export class MapComponent implements OnInit {
           this.cd.detectChanges();
         }
       });
+
+    console.log(this.sidenavState);
   }
 
   /**
@@ -286,6 +298,10 @@ export class MapComponent implements OnInit {
         zoom: 16,
       });
     } catch (e) {}
+  }
+
+  closeSidenav() {
+    this.openSidenavClick.emit('close');
   }
 
   ngOnDestroy(): void {

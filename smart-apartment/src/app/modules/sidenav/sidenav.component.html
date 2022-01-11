@@ -1,22 +1,22 @@
 <div class="sidenav">
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav
-      id="sidenavContainer"
-      #sidenav
-      mode="side"
-      [opened]="mobileQuery.matches ? 'false' : 'true'"
-    >
+    <mat-sidenav id="sidenavContainer" #sidenav mode="side" [opened]="true">
       <app-apartment-list-item
         *ngIf="activeQuery?.item == 'apartmentItem'; else apartmentList"
       ></app-apartment-list-item>
 
       <ng-template #apartmentList>
-        <app-apartment-list></app-apartment-list>
+        <app-apartment-list
+          (openSidenavClick)="toggleSidenav($event, sidenav)"
+        ></app-apartment-list>
       </ng-template>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content">
       <div class="sidenav-content__wrapper">
-        <app-map></app-map>
+        <app-map
+          [sidenavState]="sidenav"
+          (openSidenavClick)="toggleSidenav($event, sidenav)"
+        ></app-map>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

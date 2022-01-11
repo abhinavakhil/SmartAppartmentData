@@ -12,3 +12,11 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+.menu-item {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  z-index: 9999;
+  transform: translate3d(-15px, 15px, 0px);
+}

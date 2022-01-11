@@ -1,9 +1,5 @@
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Route } from '@angular/compiler/src/core';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { apartmentStoreActions, RootStoreState } from '@app/root-store';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,20 +8,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit, OnDestroy {
-  mobileQuery: MediaQueryList;
-  private _mobileQueryListener: () => void;
   subscription: Subscription = new Subscription();
   activeQuery: any;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    private media: MediaMatcher,
-    private activatedRoute: ActivatedRoute
-  ) {
-    this.mobileQuery = this.media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => this.cd.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-  }
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -35,7 +21,13 @@ export class SidenavComponent implements OnInit, OnDestroy {
     );
   }
 
+  toggleSidenav(event: any, sidenav: any) {
+    if (event) {
+      sidenav.toggle();
+    }
+  }
+
   ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.subscription.unsubscribe();
   }
 }
