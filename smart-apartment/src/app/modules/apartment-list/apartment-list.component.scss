@@ -14,7 +14,6 @@
     overflow-y: auto;
     // height: 85vh;
     margin-bottom: 50px;
-    cursor: pointer;
 
     &-card {
       border-radius: 0px;
@@ -50,11 +49,10 @@
   }
 
   .filter-box {
-    cursor: pointer;
     &-rent {
       &-text {
-        color: #ffffff;
-        margin-bottom: -12px;
+        color: $text-white;
+        margin-bottom: 12px;
 
         img {
           margin-bottom: 2px;

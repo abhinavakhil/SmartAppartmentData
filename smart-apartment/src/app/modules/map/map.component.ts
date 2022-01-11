@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  HostListener,
   Input,
   OnInit,
   Output,
@@ -36,6 +37,12 @@ export class MapComponent implements OnInit {
   markerElements: any = [];
   mapLoaded: boolean = false;
   subscription: Subscription = new Subscription();
+  screenWidth: number = 0;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?: any) {
+    this.screenWidth = window.innerWidth;
+  }
 
   constructor(
     private mapService: MapService,
@@ -44,6 +51,7 @@ export class MapComponent implements OnInit {
     private store$: Store<RootStoreState.State>,
     private apartmentService: ApartmentStoreEffects
   ) {
+    this.onResize();
     this.subscription.add(
       this.apartmentService.apartmentObject.subscribe((data: any) => {
         if (

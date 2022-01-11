@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -34,6 +35,12 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
   apartmentRangeList: Array<any> = [];
   favoritesList: Array<any> = [];
   subscription: Subscription = new Subscription();
+  screenWidth: number = 0;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?: any) {
+    this.screenWidth = window.innerWidth;
+  }
 
   constructor(
     private store$: Store<RootStoreState.State>,

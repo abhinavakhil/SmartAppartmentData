@@ -11,7 +11,12 @@
           | {{ apartmentList.agentInfo?.company }}
         </h4>
 
-        <div fxLayout="row" (click)="openSidenav()">
+        <div
+          fxLayout="row"
+          class="pointer"
+          (click)="openSidenav()"
+          *ngIf="screenWidth <= 480"
+        >
           <mat-icon>map</mat-icon>
         </div>
       </div>
@@ -22,7 +27,7 @@
         fxLayout="row"
         fxLayoutAlign="space-between center"
         fxFlex="100"
-        class="filter-box"
+        class="filter-box pointer"
       >
         <div class="filter-box-rent" (click)="toggleRents()">
           <p class="filter-box-rent-text">
@@ -33,7 +38,7 @@
             />
           </p>
 
-          <p class="filter-box-rent-text">
+          <p class="filter-box-rent-text -mt-12">
             {{ minPrice | currency: "USD":"symbol":"1.0-0" }} -
             {{
               selectedPrice >= 1
@@ -52,7 +57,7 @@
             />
           </p>
 
-          <p class="filter-box-bed-text">
+          <p class="filter-box-bed-text -mt-12">
             {{ studio ? "Studio ," : null }}
             {{ oneBed ? " 1 Bed ," : null }} {{ twoBed ? " 2 Bed ," : null }}
             {{ threeBed ? " 3 Bed " : null }}
@@ -103,7 +108,7 @@
     </mat-toolbar>
 
     <!-- body -->
-    <mat-nav-list class="apartment-list">
+    <mat-nav-list class="apartment-list pointer">
       <mat-card
         class="apartment-list-card"
         *ngFor="

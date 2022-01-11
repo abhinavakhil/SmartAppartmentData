@@ -8,7 +8,7 @@
     </mat-toolbar>
 
     <div *ngIf="!showGallery">
-      <mat-toolbar color="primary" class="company-info">
+      <mat-toolbar color="primary" class="company-info pointer">
         <h4 class="flex-center" (click)="goBack()">
           <i class="material-icons arrow-back">arrow_back</i>
           Back to Results
@@ -45,7 +45,7 @@
       <div fxLayout="row" fxLayoutAlign="space-between center" class="mr-5">
         <div
           *ngFor="let photo of apartmentItem.photos.slice(0, 3); last as last"
-          class="photo-container"
+          class="photo-container pointer"
           (click)="toggleGallery()"
         >
           <img [src]="photo" class="photo-item" />
