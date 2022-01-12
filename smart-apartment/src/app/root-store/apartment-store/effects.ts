@@ -22,7 +22,7 @@ export class ApartmentStoreEffects {
       apartmentActions.ActionTypes.GET_APARTMENT_REQUEST
     ),
     switchMap((action: any) => {
-      return this.apartmentService.property().pipe(
+      return this.apartmentService.apartmentList().pipe(
         map((data) => {
           return new apartmentActions.GetApartmentSuccessAction(data);
         }),
@@ -38,7 +38,7 @@ export class ApartmentStoreEffects {
       apartmentActions.ActionTypes.GET_APARTMENT_ITEM_REQUEST
     ),
     switchMap((action: any) => {
-      return this.apartmentService.propertyById(action.productId).pipe(
+      return this.apartmentService.apartmentById(action.productId).pipe(
         map((data) => {
           return new apartmentActions.GetApartmentItemSuccessAction(data);
         }),

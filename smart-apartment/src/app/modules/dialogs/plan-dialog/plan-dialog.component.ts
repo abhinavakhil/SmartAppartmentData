@@ -14,6 +14,9 @@ export class PlanDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  /**
+   * CLOSE DIALOG
+   */
   closeDialog() {
     this.dialogRef.close();
   }

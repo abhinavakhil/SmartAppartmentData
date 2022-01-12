@@ -4,6 +4,10 @@ import { ApartmentStoreModule } from './apartment-store.module';
 export const selectItems = (state: ApartmentStoreModule) =>
   state.Apartment ? state.Apartment : null;
 
+/**
+ * GET APARTMENT LST
+ * @returns APARTMENT LIST
+ */
 export const getApartmentList = () =>
   createSelector(selectItems, (items) => {
     {
@@ -14,6 +18,10 @@ export const getApartmentList = () =>
     }
   });
 
+/**
+ * GET APARTMENT RECORDS FROM APRTMENT LIST
+ * @returns APARTMENT RECORDS
+ */
 export const getApartmentsData = () =>
   createSelector(selectItems, (items) => {
     {
@@ -24,6 +32,10 @@ export const getApartmentsData = () =>
     }
   });
 
+/**
+ * GET APARTMENT ITEM
+ * @returns APARTMENT ITEM
+ */
 export const getApartmentItemList = () =>
   createSelector(selectItems, (items) => {
     {
@@ -34,6 +46,10 @@ export const getApartmentItemList = () =>
     }
   });
 
+/**
+ * GET PRICE RANGE FROM APARTMENT LIST -> RECORD INTO A SINGLE ARRAY
+ * @returns ARRAY OF PRICE, BEDROOMS, PROPERTYID
+ */
 export const getApartmentRange = () =>
   createSelector(selectItems, (items) => {
     {

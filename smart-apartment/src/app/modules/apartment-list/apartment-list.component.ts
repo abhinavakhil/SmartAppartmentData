@@ -46,7 +46,9 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
     private store$: Store<RootStoreState.State>,
     private commonService: CommonService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    this.onResize();
+  }
 
   ngOnInit(): void {
     this.apartmentList$ = this.store$.pipe(
@@ -95,10 +97,16 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * GET FAVORITES
+   */
   getFavorites() {
     this.favoritesList = this.commonService.getFavourities();
   }
 
+  /**
+   * OPEN SIDENAV ( FOR MOBILE VIEW (SCREENWIDTH <= 480))
+   */
   openSidenav() {
     this.openSidenavClick.emit('open');
   }

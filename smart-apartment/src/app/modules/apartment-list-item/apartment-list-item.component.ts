@@ -67,13 +67,15 @@ export class ApartmentListItemComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *
+   * TOGGLE FAVORITES
    * @param apartmentItem
    */
   toggleFavorite(apartmentItem: any, isFavorites?: boolean) {
+    // 1) IF FAVORITES, THEN UPON TOGGLE REMOVE FAVORITES
     if (isFavorites) {
       this.removeFavorites();
     } else {
+      // 2) ELSE ADD FAVORITES
       this.changeColor = !this.changeColor;
       const item = { ...apartmentItem };
       item.favorite = true;
@@ -81,11 +83,17 @@ export class ApartmentListItemComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * REMOVE FAVORITES
+   */
   removeFavorites() {
     this.commonService.removeFavoritesItemById(this.activeQuery?.propertyId);
     this.getFavorites();
   }
 
+  /**
+   * GET FAVORITES
+   */
   getFavorites() {
     this.favoritesList = this.commonService.getFavoritesListById(
       this.activeQuery?.propertyId

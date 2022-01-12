@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonService } from '@app/shared/services/common/common.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,6 +15,13 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.getQueryParams();
+  }
+
+  /**
+   * GET QUERY PARAMS
+   */
+  getQueryParams() {
     this.subscription.add(
       this.activatedRoute.queryParams.subscribe((params) => {
         this.activeQuery = { ...params };
@@ -21,6 +29,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * TOGGLE SIDENAV BASED UPON EVENT
+   * @param event OUTPUT EVENT
+   * @param sidenav SIDENAV
+   */
   toggleSidenav(event: any, sidenav: any) {
     if (event) {
       sidenav.toggle();

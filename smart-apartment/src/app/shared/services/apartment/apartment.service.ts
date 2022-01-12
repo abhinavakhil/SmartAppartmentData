@@ -10,14 +10,23 @@ export class ApartmentService {
 
   constructor(private http: HttpClient) {}
 
-  property(): Observable<any> {
+  /**
+   * GET APRTMENT LIST ( PROPERTY )
+   * @returns APARTMENT LIST AS OBSEVABLE
+   */
+  apartmentList(): Observable<any> {
     return this.http.get(
       this.endpoint +
         'List/json/listItems.aspx?listID=5363950&token=5AE7DFB40500DDC03BC84BD3F0A8AC0F18784B1E&receipt=undefined'
     );
   }
 
-  propertyById(propertyId: number): Observable<any> {
+  /**
+   * GET APARTMENT BY ID
+   * @param propertyId PROPERTYID
+   * @returns APARTMENT LIST ITEM
+   */
+  apartmentById(propertyId: number): Observable<any> {
     return this.http.get(
       this.endpoint +
         'List/json/propertyItem.aspx?listID=5363950&token=5AE7DFB40500DDC03BC84BD3F0A8AC0F18784B1E&propertyID=' +

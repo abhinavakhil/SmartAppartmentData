@@ -15,6 +15,13 @@ export class GalleryComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.getImagesList();
+  }
+
+  /**
+   * GET IMAGES LIST
+   */
+  getImagesList() {
     this.imageObject = this.galleryItem.map((item: string) => {
       return { image: item };
     });
