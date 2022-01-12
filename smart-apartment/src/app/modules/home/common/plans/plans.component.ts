@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PlanDialogComponent } from '@app/modules/dialogs/plan-dialog/plan-dialog.component';
+import { PlanDialogComponent } from '@app/modules/home/dialogs/plan-dialog/plan-dialog.component';
 
 @Component({
   selector: 'app-plans',
