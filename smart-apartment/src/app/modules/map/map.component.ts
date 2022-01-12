@@ -220,7 +220,7 @@ export class MapComponent implements OnInit {
         );
       });
 
-      // 5) CHANGE COLOR OF SELECTEC MARKER
+      // 5) CHANGE COLOR OF SELECTED MARKER ON RELOAD
       if (this.mapPins.length == 1) {
         if (this.activeQuery?.propertyId == marker.propertyID) {
           markerElt.style.backgroundImage =

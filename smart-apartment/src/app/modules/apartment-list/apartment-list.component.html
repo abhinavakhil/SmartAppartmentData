@@ -1,5 +1,6 @@
 <div class="apartment-list-container">
-  <div *ngIf="apartmentList$ | async as apartmentList; else loader">
+  <div *ngIf="apartmentList$ | async as apartmentList">
+    <!-- HEADER -->
     <mat-toolbar color="primary" class="company-info">
       <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100%">
         <h4>
@@ -22,6 +23,7 @@
       </div>
     </mat-toolbar>
 
+    <!-- SUB HEADER -->
     <mat-toolbar class="primary-light">
       <div
         fxLayout="row"
@@ -29,8 +31,8 @@
         fxFlex="100"
         class="filter-box pointer"
       >
-        <div class="filter-box-rent" (click)="toggleRents()">
-          <p class="filter-box-rent-text">
+        <div class="filter-box-common" (click)="toggleRents()">
+          <p class="filter-box-common-text">
             Rent
             <img
               src="https://my.smartapartmentdata.com/assets/images/arrow-down-white.svg"
@@ -38,7 +40,7 @@
             />
           </p>
 
-          <p class="filter-box-rent-text -mt-12">
+          <p class="filter-box-common-text -mt-12">
             {{ minPrice | currency: "USD":"symbol":"1.0-0" }} -
             {{
               selectedPrice >= 1
@@ -48,8 +50,8 @@
           </p>
         </div>
 
-        <div class="filter-box-bed" (click)="toggleBeds()">
-          <p class="filter-box-bed-text">
+        <div class="filter-box-common" (click)="toggleBeds()">
+          <p class="filter-box-common-text">
             Bedrooms
             <img
               src="https://my.smartapartmentdata.com/assets/images/arrow-down-white.svg"
@@ -57,7 +59,7 @@
             />
           </p>
 
-          <p class="filter-box-bed-text -mt-12">
+          <p class="filter-box-common-text -mt-12">
             {{ studio ? "Studio ," : null }}
             {{ oneBed ? " 1 Bed ," : null }} {{ twoBed ? " 2 Bed ," : null }}
             {{ threeBed ? " 3 Bed " : null }}
@@ -107,7 +109,7 @@
       </div>
     </mat-toolbar>
 
-    <!-- body -->
+    <!-- APARTMENT LIST -->
     <mat-nav-list class="apartment-list pointer">
       <mat-card
         class="apartment-list-card"
@@ -129,7 +131,7 @@
               <h4>
                 {{ list.name }}
 
-                <span *ngIf="favoritesList && favoritesList[i]?.favorite">
+                <span *ngIf="getFavoritesByID(list.propertyID)">
                   <mat-icon mat-button color="warn" class="favorite"
                     >favorite</mat-icon
                   >
@@ -197,7 +199,8 @@
     </mat-nav-list>
   </div>
 
-  <ng-template #loader>
+  <!-- LOADER -->
+  <div *ngIf="loader$ | async">
     <div class="ph-item">
       <div class="ph-col-12">
         <div class="ph-row">
@@ -213,5 +216,5 @@
         <div class="ph-picture"></div>
       </div>
     </div>
-  </ng-template>
+  </div>
 </div>

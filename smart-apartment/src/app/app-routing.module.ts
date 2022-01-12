@@ -7,12 +7,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('@app/layouts/layout.module').then((m) => m.LayoutModule),
   },
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     import('@app/modules/home/home.module').then((m) => m.HomeModule),
-  // },
-  // { path: '**', redirectTo: '/404' },
 ];
 
 @NgModule({

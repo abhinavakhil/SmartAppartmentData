@@ -11,7 +11,7 @@ export const selectItems = (state: ApartmentStoreModule) =>
 export const getApartmentList = () =>
   createSelector(selectItems, (items) => {
     {
-      if (items != null && items['apartment']) {
+      if (items != null && items['apartment'] && !items['apartmentLoader']) {
         return items['apartment'];
       }
       return null;
@@ -75,6 +75,21 @@ export const getApartmentRange = () =>
         return rangeList.flat(1);
       } else {
         return null;
+      }
+    }
+  });
+
+/**
+ * APARTMENT LOADER
+ * @returns
+ */
+export const getApartmentLoader = () =>
+  createSelector(selectItems, (items) => {
+    {
+      if (items['apartmentLoader']) {
+        return items['apartmentLoader'];
+      } else {
+        return false;
       }
     }
   });

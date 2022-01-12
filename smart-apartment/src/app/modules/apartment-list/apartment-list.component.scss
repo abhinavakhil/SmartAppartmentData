@@ -12,8 +12,15 @@
   .apartment-list {
     padding: 10px;
     overflow-y: auto;
-    // height: 85vh;
-    margin-bottom: 50px;
+    height: 84vh;
+
+    @include max-height(710px) {
+      height: 80vh;
+    }
+
+    @include max-height(541px) {
+      height: 75vh;
+    }
 
     &-card {
       border-radius: 0px;
@@ -49,22 +56,10 @@
   }
 
   .filter-box {
-    &-rent {
+    &-common {
       &-text {
         color: $text-white;
         margin-bottom: 12px;
-
-        img {
-          margin-bottom: 2px;
-          margin-left: 3px;
-        }
-      }
-    }
-
-    &-bed {
-      &-text {
-        color: #ffffff;
-        margin-bottom: -12px;
 
         img {
           margin-bottom: 2px;

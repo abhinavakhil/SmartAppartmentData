@@ -3,16 +3,15 @@ import {
   Component,
   EventEmitter,
   HostListener,
-  Input,
   OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
 import { RootStoreState } from '@app/root-store';
-import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
 import * as selectors from '@app/root-store/apartment-store/apartment.selector';
 import { CommonService } from '@app/shared/services/common/common.service';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-apartment-list',
@@ -21,7 +20,9 @@ import { CommonService } from '@app/shared/services/common/common.service';
 })
 export class ApartmentListComponent implements OnInit, OnDestroy {
   @Output() openSidenavClick: EventEmitter<any> = new EventEmitter<any>();
+
   apartmentList$: Observable<any> | undefined;
+  loader$: Observable<any> | undefined;
   togglePriceFilter: boolean = false;
   toggleBedFilter: boolean = false;
   minPrice: number = 0;
@@ -51,6 +52,8 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loader$ = this.store$.pipe(select(selectors.getApartmentLoader()));
+
     this.apartmentList$ = this.store$.pipe(
       select(selectors.getApartmentList())
     );
@@ -102,6 +105,24 @@ export class ApartmentListComponent implements OnInit, OnDestroy {
    */
   getFavorites() {
     this.favoritesList = this.commonService.getFavourities();
+  }
+
+  /**
+   * MAP FAVORITES ITEM BY PROPERTYID
+   * @param propertyID PROPERTYID
+   * @returns BOOLEAN (WEATHER CURRENT PROPERTYID IS FAVORITE OR NOT)
+   */
+  getFavoritesByID(propertyID: any) {
+    let favorites: boolean = false;
+
+    if (this.favoritesList?.length) {
+      this.favoritesList?.forEach((item: any) => {
+        if (item.propertyID == propertyID) {
+          favorites = true;
+        }
+      });
+    }
+    return favorites;
   }
 
   /**

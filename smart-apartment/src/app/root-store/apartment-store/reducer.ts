@@ -9,11 +9,13 @@ export function ApartmentReducer(
     case ActionTypes.GET_APARTMENT_REQUEST:
       return {
         ...state,
+        apartmentLoader: true,
       };
     case ActionTypes.GET_APARTMENT_SUCCESS:
       return {
         ...state,
         apartment: action.payload,
+        apartmentLoader: false,
       };
     case ActionTypes.GET_APARTMENT_ITEM_REQUEST:
       return {

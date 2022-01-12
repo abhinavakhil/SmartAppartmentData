@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonService } from '@app/shared/services/common/common.service';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -1,4 +1,5 @@
 <div class="plan">
+  <!-- PLAN DETAILS -->
   <div class="special-offer" *ngIf="apartmentItem.specials">
     <h4>SPECIALS</h4>
     <p>{{ apartmentItem.specials }}</p>
@@ -6,6 +7,7 @@
 
   <mat-divider class="mt-20"></mat-divider>
 
+  <!-- FLOOPLAN LIST -->
   <mat-list role="list" *ngFor="let plan of apartmentItem.floorplans">
     <mat-list-item role="listitem">
       <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">

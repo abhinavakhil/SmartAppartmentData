@@ -1,9 +1,9 @@
 @import "../../../../assets/styles/sass/styles.scss";
 
 .plan {
-  height: 58vh;
-  padding: 12px;
   overflow-y: auto;
+  padding: 12px;
+  @include common-height-container;
 
   h3 {
     color: $primary-color-contrast;

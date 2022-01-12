@@ -1,10 +1,12 @@
 <div class="gallery mt-5 pointer">
-  <div fxLayout="column" fxLayoutAlign="center center">
+  <!-- GALLERY LIST -->
+  <div fxLayout="column" fxLayoutAlign="center center" class="pad-b-20">
     <div *ngFor="let photo of galleryItem; let i = index">
       <img [src]="photo" class="gallery-item" (click)="showLightbox(i)" />
     </div>
   </div>
 
+  <!-- FULLSCREEN IMAGE VIEWER -->
   <ng-image-fullscreen-view
     [images]="imageObject"
     [imageIndex]="currentIndex"

@@ -52,7 +52,7 @@ export class CommonService {
    */
   getFavoritesListById(propertyId: any) {
     const favoritesList = this.getFavourities();
-    const favorites = favoritesList.filter(
+    const favorites = favoritesList?.filter(
       (list: any) => list.propertyID == +propertyId
     );
     return favorites;
@@ -65,7 +65,7 @@ export class CommonService {
   removeFavoritesItemById(propertyId: any) {
     const favoritesList = this.getFavourities();
     if (favoritesList?.length) {
-      const index = favoritesList.findIndex(
+      const index = favoritesList?.findIndex(
         (item: any) => item.propertyID == propertyId
       );
 

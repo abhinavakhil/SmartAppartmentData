@@ -1,5 +1,6 @@
 <div class="apartment-list-item-container">
   <div *ngIf="apartmentItemList$ | async as apartmentItem; else loader">
+    <!-- HEADER -->
     <mat-toolbar color="primary" class="company-info" *ngIf="showGallery">
       <h4 class="flex-center" (click)="toggleGallery()">
         <i class="material-icons arrow-back">arrow_back</i>
@@ -15,6 +16,7 @@
         </h4>
       </mat-toolbar>
 
+      <!-- SUB HEADER -->
       <mat-toolbar class="primary-light">
         <div
           fxLayout="row"
@@ -28,12 +30,18 @@
           </div>
 
           <div
-            (click)="toggleFavorite(apartmentItem, favoritesList[0]?.favorite)"
+            (click)="
+              toggleFavorite(
+                apartmentItem,
+                favoritesList ? favoritesList[0]?.favorite : false
+              )
+            "
           >
             <button
               mat-fab
               [ngClass]="{
-                favButton: changeColor || favoritesList[0]?.favorite
+                favButton:
+                  changeColor || (favoritesList && favoritesList[0]?.favorite)
               }"
             >
               <mat-icon>favorite</mat-icon>
@@ -42,6 +50,7 @@
         </div>
       </mat-toolbar>
 
+      <!-- GALLERY IMAGES -->
       <div fxLayout="row" fxLayoutAlign="space-between center" class="mr-5">
         <div
           *ngFor="let photo of apartmentItem.photos.slice(0, 3); last as last"
@@ -55,7 +64,7 @@
         </div>
       </div>
 
-      <!-- body -->
+      <!-- APARTMENT ITEM -->
       <mat-tab-group mat-stretch-tabs>
         <mat-tab label="Plans">
           <div>
@@ -68,12 +77,14 @@
       </mat-tab-group>
     </div>
 
+    <!-- GALLERY -->
     <app-gallery
       [galleryItem]="apartmentItem.photos"
       *ngIf="showGallery"
     ></app-gallery>
   </div>
 
+  <!-- LOADER -->
   <ng-template #loader>
     <div class="ph-item">
       <div class="ph-col-12">

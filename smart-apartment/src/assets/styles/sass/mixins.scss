@@ -6,6 +6,12 @@
   }
 }
 
+@mixin max-height($args) {
+  @media (max-height: $args) {
+    @content;
+  }
+}
+
 @mixin res-phone {
   @media (max-width: $break-sm) {
     @content;
@@ -27,5 +33,21 @@
 @mixin port-tab {
   @media (max-width: 620px) {
     @content;
+  }
+}
+
+@mixin common-height-container {
+  height: 58vh;
+
+  @include max-height(710px) {
+    height: 54vh;
+  }
+
+  @include max-height(628px) {
+    height: 50vh;
+  }
+
+  @include max-height(590px) {
+    height: 45vh;
   }
 }

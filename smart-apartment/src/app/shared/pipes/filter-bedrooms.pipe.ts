@@ -14,7 +14,7 @@ export class FilterBedroomsPipe implements PipeTransform {
     if (!items) {
       return items;
     }
-    // console.log(studio, oneBed, twoBed, threeBed);
+
     if (studio && !oneBed && !twoBed && !threeBed) {
       return this.filterBedrooms(items, 0);
     } else if (!studio && oneBed && !twoBed && !threeBed) {

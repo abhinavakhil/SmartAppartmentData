@@ -72,6 +72,18 @@ export class MapService {
         markerPinLayer.remove();
       });
 
+      // CHANGE REPLACE MARKER ON MAP ON USER SELECTION
+      const selectedMarker = Array.from(
+        document.getElementsByClassName(
+          'mapboxgl-marker'
+        ) as HTMLCollectionOf<HTMLElement>
+      );
+
+      selectedMarker.forEach((element) => {
+        element.style.backgroundImage =
+          'url(https://my.smartapartmentdata.com/assets/images/map-circle-blue.svg)';
+      });
+
       // FLY ( NAVIGATE ) TO THE MARKER
       this.flyToMarker(focusedMarker, map);
     } catch (e) {}

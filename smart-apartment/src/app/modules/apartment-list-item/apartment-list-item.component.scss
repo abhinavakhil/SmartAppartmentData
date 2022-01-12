@@ -29,6 +29,10 @@
       height: 100%;
       width: 143px;
 
+      @include res-phone {
+        width: 120px;
+      }
+
       &-text {
         position: absolute;
         bottom: 38px;

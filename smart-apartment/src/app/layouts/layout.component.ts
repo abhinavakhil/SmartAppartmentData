@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { apartmentStoreActions, RootStoreState } from '@app/root-store';
+import { RootStoreState } from '@app/root-store';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -10,7 +10,5 @@ import { Store } from '@ngrx/store';
 export class LayoutComponent implements OnInit {
   constructor(private store$: Store<RootStoreState.State>) {}
 
-  ngOnInit(): void {
-    // this.store$.dispatch(new apartmentStoreActions.GetApartmentRequestAction());
-  }
+  ngOnInit(): void {}
 }
