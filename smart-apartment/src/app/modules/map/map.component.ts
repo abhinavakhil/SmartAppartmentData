@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
   mapPins: any = [];
   map!: mapboxgl.Map;
   style = mapStyle;
-  zoom = 10.9;
+  zoom = 12.2;
   source: any;
   markerElements: any = [];
   mapLoaded: boolean = false;
@@ -232,7 +232,7 @@ export class MapComponent implements OnInit {
     this.map.flyTo({
       center: this.getMapCenterCoordinates(),
       essential: true,
-      zoom: 10.9,
+      zoom: 12.2,
     });
   }
 
